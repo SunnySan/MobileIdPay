@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Mobile ID Pay</string>
+    <string name="title_home">QR Code</string>
+    <string name="title_dashboard">My ID</string>
+    <string name="title_notifications">Transactions</string>
+    <string name="textScanQRCodeOnTheGoods">Scan the QR code on the goods and make payment.</string>
+    <string name="textScanQRCode">Scan QR code</string>
+</resources>
