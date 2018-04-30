@@ -1,5 +1,6 @@
 package com.taisys.sc.mobileidpay;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -33,17 +34,18 @@ public class ScanActivity extends AppCompatActivity implements BarcodeReader.Bar
 
     @Override
     public void onScanned(Barcode barcode) {
-
+        String s = barcode.displayValue;
+        if (s.indexOf("ajaxGetMyGoods")<1) return;
+        barcodeReader.pauseScanning();
         // playing barcode reader beep sound
         barcodeReader.playBeep();
         Log.d("Sunny", "Sunny code:" + barcode.displayValue);
 
         // ticket details activity by passing barcode
-        /*
-        Intent intent = new Intent(ScanActivity.this, TicketResultActivity.class);
+        Intent intent = new Intent(ScanActivity.this, PaymentConfirmActivity.class);
         intent.putExtra("code", barcode.displayValue);
         startActivity(intent);
-        */
+        finish();
     }
 
     @Override

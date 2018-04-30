@@ -5,4 +5,10 @@
     <string name="title_notifications">Transactions</string>
     <string name="textScanQRCodeOnTheGoods">Scan the QR code on the goods and make payment.</string>
     <string name="textScanQRCode">Scan QR code</string>
+    <string name="msgBarcodeIsEmpty">QR code is empty</string>
+    <string name="msgUnableToFindGoods">Unable to get goods information</string>
+    <string name="textConfirmPayment">Confirm Payment</string>
+    <string name="txtGoodsName">Goods name:&#160;</string>
+    <string name="txtGoodsPrice">Price:&#160;</string>
+    <string name="txtGoodsDescription">Description:&#160;</string>
 </resources>
