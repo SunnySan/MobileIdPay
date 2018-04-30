@@ -117,11 +117,11 @@ public class PaymentConfirmActivity extends AppCompatActivity {
                 goodsId = goods.getId();
                 String s = "";
                 s = getString(R.string.txtGoodsName);
-                txtName.setText(s + goods.getName());
+                txtName.setText(s + "\n" + goods.getName());
                 s = getString(R.string.txtGoodsPrice);
-                txtPrice.setText(s + "$" + goods.getPrice());
+                txtPrice.setText(s + "\n" + "$" + goods.getPrice());
                 s = getString(R.string.txtGoodsDescription);
-                txtDescription.setText(s + goods.getDescription());
+                txtDescription.setText(s + "\n" + goods.getDescription());
                 /*
                 txtDirector.setText(goods.getDescription());
                 txtDuration.setText(goods.getPrice());
