@@ -11,4 +11,19 @@
     <string name="txtGoodsName">Goods name:&#160;</string>
     <string name="txtGoodsPrice">Price:&#160;</string>
     <string name="txtGoodsDescription">Description:&#160;</string>
+    <string name="txtPleaseEnterPINCode">Enter PIN Code:&#160;</string>
+    <string name="pleaseWait">Please wait...</string>
+    <string name="msgCreatingSignature">Creating signature in progress.</string>
+    <string name="msgSystemInfo">System Info.</string>
+    <string name="msgDoesntSupportOti">Unable to communicate with card, please ensure you have inserted the card.</string>
+    <string name="msgUnableToGetIccid">Unable to obtain card information, please regiter your certificate.</string>
+    <string name="msgPleaseEnterPinCode">Please enter PIN code.</string>
+    <string name="msgPinCodeIsIncorrect">The PIN code is incorrect, please enter valid PIN code.</string>
+    <string name="msgUnableToGetIdCardNumber">Unable to obtain phone number, please regiter your certificate.</string>
+    <string name="msgFailToReadPublicKey">Unable to get your public key...</string>
+    <string name="msgProcessFailed">Process failed.</string>
+    <string name="msgProcessSucceeded">The job is successfully processed.</string>
+    <string name="msgUnableToParseServerResponseData">Unable to parse response data sent from server.</string>
+    <string name="msgUnableToGenerateRsaKeyPair">Unable to generate RSA key pair</string>
+
 </resources>
