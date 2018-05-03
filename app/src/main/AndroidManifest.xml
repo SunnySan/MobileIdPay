@@ -3,7 +3,6 @@
     package="com.taisys.sc.mobileidpay">
 
     <uses-permission android:name="android.permission.INTERNET" />
-
     <uses-permission android:name="org.simalliance.openmobileapi.SMARTCARD" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.READ_SMS" />
@@ -21,7 +20,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
         <uses-library
             android:name="org.simalliance.openmobileapi"
             android:required="false" />
@@ -36,13 +34,18 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity android:name=".ScanActivity"
-            android:screenOrientation="portrait">
-        </activity>
-
-        <activity android:name=".PaymentConfirmActivity" android:screenOrientation="portrait">
-        </activity>
+        <activity
+            android:name=".ScanActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".PaymentConfirmActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".TransactionsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".MyIdActivity"
+            android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>

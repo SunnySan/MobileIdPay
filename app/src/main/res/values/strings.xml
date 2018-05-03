@@ -25,5 +25,7 @@
     <string name="msgProcessSucceeded">The job is successfully processed.</string>
     <string name="msgUnableToParseServerResponseData">Unable to parse response data sent from server.</string>
     <string name="msgUnableToGenerateRsaKeyPair">Unable to generate RSA key pair</string>
+    <string name="msgDataUpdateInProgress">Data update in progress</string>
+    <string name="title_activity_my_id">MyIdActivity</string>
 
 </resources>

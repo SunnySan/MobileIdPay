@@ -63,11 +63,13 @@ public class utility {
 //產生20碼的RequestId
     public static String generateRequestId(){
         //以【日期+時間+四位數隨機數】作為送給BSC API的 RequestId，例如【20110816-102153-6221】
-        java.text.SimpleDateFormat formatter = new java.text.SimpleDateFormat("yyyyMMdd-HHmmss");
+        //java.text.SimpleDateFormat formatter = new java.text.SimpleDateFormat("yyyyMMdd-HHmmss");
+        java.text.SimpleDateFormat formatter = new java.text.SimpleDateFormat("yyyyMMddHHmmss");
         java.util.Date currentTime = new java.util.Date();//得到當前系統時間
         String txtRandom = String.valueOf(Math.round(Math.random()*10000));
         txtRandom = MakesUpZero(txtRandom, 4);	//不足4碼的話，將前面補0
-        String txtRequestId = formatter.format(currentTime) + "-" + txtRandom; //將日期時間格式化，加上一個隨機數，作為RequestId，格式是yyyyMMdd-HHmmss-xxxx
+        //String txtRequestId = formatter.format(currentTime) + "-" + txtRandom; //將日期時間格式化，加上一個隨機數，作為RequestId，格式是yyyyMMdd-HHmmss-xxxx
+        String txtRequestId = formatter.format(currentTime) + txtRandom; //將日期時間格式化，加上一個隨機數，作為RequestId，格式是yyyyMMdd-HHmmss-xxxx
 
         return txtRequestId;
     }

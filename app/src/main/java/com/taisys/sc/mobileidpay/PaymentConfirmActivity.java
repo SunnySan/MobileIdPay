@@ -264,10 +264,33 @@ public class PaymentConfirmActivity extends AppCompatActivity {
         //顯示Progress對話視窗
         //utility.showToast(myContext, getString(R.string.msgReadCardInfo));
         //showWaiting(getString(R.string.pleaseWait), getString(R.string.msgReadCardInfo));
-        Log.d("MobileIdAuthentication", "Get Card Info");
+        Log.d(TAG, "Get Card Info");
         String res[] = mCard.GetCardInfo();
+        String iccid = "";
+        String s = "";
+        int i = 0;
+        int j = 0;
+
         //disWaiting();
         if (res != null && res[0].equals(Card.RES_OK)) {
+            /*
+                            res[1] 的結構如下：
+                            假设拿到回复信息为：040001C3D908123456789012345601010412000100
+                            其中   040001C3D9           LV结构 04长度，0001C3D9文件系统剩余空间大小，0x0001C3D9 = 115673 byte；
+                            081234567890123456   LV结构 08长度，081234567890123456为卡号；
+                            0101                 LV结构 01长度，01卡片版本号；
+                            0412000100           LV结构 04长度，12000100 Cos版本号；
+                         */
+            s = res[1].substring(0, 2);
+            i = Integer.parseInt(s);
+            s = res[1].substring((i+1)*2, (i+1)*2 + 2);
+            //utility.showMessage(myContext, s);
+            j = Integer.parseInt(s);
+            iccid = res[1].substring((i+1)*2+2, (i+1)*2+2 + j*2);
+            //utility.showMessage(myContext, s);
+            //i = s.length();
+            //utility.showMessage(myContext, String.valueOf(i));
+            utility.setMySetting(myContext, "iccid", iccid);
             verifyPinCode();
         } else {
             disWaiting();
@@ -277,7 +300,7 @@ public class PaymentConfirmActivity extends AppCompatActivity {
     }
 
     private void verifyPinCode(){
-        Log.d("MobileIdAuthentication", "Verify PIN code");
+        Log.d(TAG, "Verify PIN code");
         EditText editTextPinCode = (EditText) findViewById(R.id.pcEnterPinCode);
         String pinCode = editTextPinCode.getText().toString();
         if (pinCode.length()==0){
@@ -296,11 +319,11 @@ public class PaymentConfirmActivity extends AppCompatActivity {
         }
         */
         if (res != null && res.equals(Card.RES_OK)) {
-            Log.d("MobileId", "PIN verification passed");
+            Log.d(TAG, "PIN verification passed");
             generateRSASignature();
         } else {
             disWaiting();
-            Log.d("MobileId", "PIN code compared failed, user enter PIN= " + pinCode + ", response= " + res);
+            Log.d(TAG, "PIN code compared failed, user enter PIN= " + pinCode + ", response= " + res);
             //utility.showMessage(myContext, pinCode);
             utility.showMessage(myContext, getString(R.string.msgPinCodeIsIncorrect));
         }

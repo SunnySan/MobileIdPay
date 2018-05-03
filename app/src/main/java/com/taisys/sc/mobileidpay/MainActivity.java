@@ -20,8 +20,12 @@ public class MainActivity extends AppCompatActivity {
                 case R.id.navigation_home:
                     return true;
                 case R.id.navigation_myid:
+                    startActivity(new Intent(MainActivity.this, MyIdActivity.class));
+                    finish();
                     return true;
                 case R.id.navigation_transactions:
+                    startActivity(new Intent(MainActivity.this, TransactionsActivity.class));
+                    finish();
                     return true;
             }
             return false;
