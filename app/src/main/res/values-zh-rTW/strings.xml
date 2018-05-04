@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Mobile ID Pay</string>
+    <string name="title_home">QR Code</string>
+    <string name="title_dashboard">我的卡片</string>
+    <string name="title_notifications">交易記錄</string>
+    <string name="textScanQRCodeOnTheGoods">請掃描 QR code 後確認付款.</string>
+    <string name="textScanQRCode">掃描 QR code</string>
+    <string name="msgBarcodeIsEmpty">空白 QR code</string>
+    <string name="msgUnableToFindGoods">無法取得商品資訊</string>
+    <string name="textConfirmPayment">確認付款</string>
+    <string name="txtGoodsName">商品名稱:&#160;</string>
+    <string name="txtGoodsPrice">價格:&#160;</string>
+    <string name="txtGoodsDescription">商品描述:&#160;</string>
+    <string name="txtPleaseEnterPINCode">輸入 PIN 碼:&#160;</string>
+    <string name="pleaseWait">請稍後...</string>
+    <string name="msgCreatingSignature">產生簽章中</string>
+    <string name="msgSystemInfo">系統通知</string>
+    <string name="msgDoesntSupportOti">無法連結SIM卡，請確認SIM卡有正確插入手機</string>
+    <string name="msgUnableToGetIccid">無法取得SIM卡資訊，請註冊您的憑證</string>
+    <string name="msgPleaseEnterPinCode">請輸入 PIN 碼</string>
+    <string name="msgPinCodeIsIncorrect">PIN 碼輸入錯誤，請輸入正確的 PIN 碼</string>
+    <string name="msgUnableToGetIdCardNumber">無法取得證號或電話號碼，請註冊您的憑證</string>
+    <string name="msgFailToReadPublicKey">無法取得您的公鑰</string>
+    <string name="msgProcessFailed">作業執行失敗</string>
+    <string name="msgProcessSucceeded">作業執行成功</string>
+    <string name="msgUnableToParseServerResponseData">無法解析伺服器回傳資訊</string>
+    <string name="msgUnableToGenerateRsaKeyPair">無法產生金鑰對</string>
+    <string name="msgDataUpdateInProgress">資料更新中</string>
+    <string name="titleMyCardBankName">銀行: myBANK</string>
+    <string name="titleMyCardCardNumber">卡號: 9999 XXXX XXXX 9999</string>
+    <string name="msgYouCanAddCardInCommercialRelease">增加卡片的功能將於正式版本中提供</string>
+
+</resources>

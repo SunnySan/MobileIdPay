@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Mobile ID Pay</string>
     <string name="title_home">QR Code</string>
-    <string name="title_dashboard">My ID</string>
+    <string name="title_dashboard">My Card</string>
     <string name="title_notifications">Transactions</string>
     <string name="textScanQRCodeOnTheGoods">Scan the QR code on the goods and make payment.</string>
     <string name="textScanQRCode">Scan QR code</string>
@@ -15,8 +15,8 @@
     <string name="pleaseWait">Please wait...</string>
     <string name="msgCreatingSignature">Creating signature in progress.</string>
     <string name="msgSystemInfo">System Info.</string>
-    <string name="msgDoesntSupportOti">Unable to communicate with card, please ensure you have inserted the card.</string>
-    <string name="msgUnableToGetIccid">Unable to obtain card information, please regiter your certificate.</string>
+    <string name="msgDoesntSupportOti">Unable to communicate with SIM card, please ensure you have inserted the card.</string>
+    <string name="msgUnableToGetIccid">Unable to obtain SIM card information, please regiter your certificate.</string>
     <string name="msgPleaseEnterPinCode">Please enter PIN code.</string>
     <string name="msgPinCodeIsIncorrect">The PIN code is incorrect, please enter valid PIN code.</string>
     <string name="msgUnableToGetIdCardNumber">Unable to obtain phone number, please regiter your certificate.</string>
@@ -26,6 +26,7 @@
     <string name="msgUnableToParseServerResponseData">Unable to parse response data sent from server.</string>
     <string name="msgUnableToGenerateRsaKeyPair">Unable to generate RSA key pair</string>
     <string name="msgDataUpdateInProgress">Data update in progress</string>
-    <string name="title_activity_my_id">MyIdActivity</string>
-
+    <string name="titleMyCardBankName">Bank: myBANK</string>
+    <string name="titleMyCardCardNumber">Card No. 9999 XXXX XXXX 9999</string>
+    <string name="msgYouCanAddCardInCommercialRelease">You can add your own card in the commercial release</string>
 </resources>

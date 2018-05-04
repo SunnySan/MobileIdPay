@@ -52,7 +52,7 @@ public class MyIdActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "You can add your own card in the commercial release", Snackbar.LENGTH_LONG)
+                Snackbar.make(view, getString(R.string.msgYouCanAddCardInCommercialRelease), Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
         });
