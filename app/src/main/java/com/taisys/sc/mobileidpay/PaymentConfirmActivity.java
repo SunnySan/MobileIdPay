@@ -29,6 +29,8 @@ import org.json.JSONObject;
 
 public class PaymentConfirmActivity extends AppCompatActivity {
     private static final String TAG = PaymentConfirmActivity.class.getSimpleName();
+    private static final int PUBLIC_KEY_FILE = 0x02A1;
+    private static final int PRIVATE_KEY_FILE = 0x03A1;
 
     private Card mCard = new Card();
     private ProgressDialog pg = null;
@@ -334,17 +336,18 @@ public class PaymentConfirmActivity extends AppCompatActivity {
         String res[] = null;
 
         //讀出 public key
-        res = mCard.ReadFile(0x0201, 0x0, 264);
+        res = mCard.ReadFile(PUBLIC_KEY_FILE, 0x0, 264);
         if (res != null && res[0].equals(Card.RES_OK)) {
             sPublicKey = res[1];
             Log.d(TAG, "public key=" + sPublicKey);
         }else if (res[0]!=null && res[0].equals("-15")){    //key不存在，建立key
+            Log.d(TAG, "Sunny: no public key found, try to generate key pair...");
             //產生 RSA key pair
-            String resString = mCard.GenRSAKeyPair(Card.RSA_1024_BITS, 0x0201, 0x0301);
+            String resString = mCard.GenRSAKeyPair(Card.RSA_1024_BITS, PUBLIC_KEY_FILE, PRIVATE_KEY_FILE);
             if (resString != null && resString.equals(Card.RES_OK)) {
-                Log.d(TAG, "Gen key pair OK!");
+                Log.d(TAG, "Sunny: Generate key pair OK!");
                 //重新讀出 PublicKey
-                res = mCard.ReadFile(0x0201, 0x0, 264);
+                res = mCard.ReadFile(PUBLIC_KEY_FILE, 0x0, 264);
                 if (res != null && res[0].equals(Card.RES_OK)) {
                     sPublicKey = res[1];
                     Log.d(TAG, "public key=" + sPublicKey);
@@ -377,7 +380,7 @@ public class PaymentConfirmActivity extends AppCompatActivity {
             return;
         }
 
-        res = mCard.RSAPriKeyCalc(sTransactionID, false, 0x0301);
+        res = mCard.RSAPriKeyCalc(sTransactionID, false, PRIVATE_KEY_FILE);
         if (mCard!=null){
             mCard.CloseSEService();
         }

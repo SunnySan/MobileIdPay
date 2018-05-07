@@ -8,7 +8,7 @@
 
     <item
         android:id="@+id/navigation_myid"
-        android:icon="@drawable/ic_perm_group_personal_info"
+        android:icon="@drawable/creditcard"
         android:title="@string/title_dashboard" />
 
     <item
