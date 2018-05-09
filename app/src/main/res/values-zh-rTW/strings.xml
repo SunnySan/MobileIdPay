@@ -25,6 +25,8 @@
     <string name="msgProcessFailed">作業執行失敗</string>
     <string name="msgProcessSucceeded">作業執行成功</string>
     <string name="msgUnableToParseServerResponseData">無法解析伺服器回傳資訊</string>
+    <string name="msgUnableToCreatePublicKeyFile">無法產生公鑰檔案空間</string>
+    <string name="msgUnableToCreatePrivateKeyFile">無法產生私鑰檔案空間</string>
     <string name="msgUnableToGenerateRsaKeyPair">無法產生金鑰對</string>
     <string name="msgDataUpdateInProgress">資料更新中</string>
     <string name="titleMyCardBankName">銀行: myBANK</string>

@@ -166,7 +166,7 @@ public class PaymentConfirmActivity extends AppCompatActivity {
      * not suggested in production, consider using Retrofit
      */
     private void searchBarcode(String barcode) {
-        Log.e(TAG, "Sunny: search goods");
+        Log.i(TAG, "Sunny: search goods");
         // making volley's json request
         JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.GET,
                 barcode, null,
@@ -174,7 +174,7 @@ public class PaymentConfirmActivity extends AppCompatActivity {
 
                     @Override
                     public void onResponse(JSONObject response) {
-                        Log.e(TAG, "Sunny: Goods response: " + response.toString());
+                        Log.i(TAG, "Sunny: Goods response: " + response.toString());
 
                         // check for success status
                         if (response.toString().indexOf("00000")>0) {
@@ -339,25 +339,50 @@ public class PaymentConfirmActivity extends AppCompatActivity {
         res = mCard.ReadFile(PUBLIC_KEY_FILE, 0x0, 264);
         if (res != null && res[0].equals(Card.RES_OK)) {
             sPublicKey = res[1];
-            Log.d(TAG, "public key=" + sPublicKey);
+            Log.d(TAG, "Sunny, existing public key=" + sPublicKey);
         }else if (res[0]!=null && res[0].equals("-15")){    //key不存在，建立key
             Log.d(TAG, "Sunny: no public key found, try to generate key pair...");
+            String resString = "";
+            //先執行CreateFile
+            resString = mCard.CreateFile(PUBLIC_KEY_FILE, (byte)0x02, 0x0, (byte)0x0, (byte)0x0, (byte)0x0);
+            if (resString == null || !resString.equals(Card.RES_OK)) {
+                disWaiting();
+                if (mCard!=null){
+                    mCard.CloseSEService();
+                }
+                utility.showMessage(myContext, getString(R.string.msgUnableToCreatePublicKeyFile) + "error code=" + res[0]);
+                Log.e(TAG, "Sunny: Create public key file fail!");
+                return;
+            }
+            Log.i(TAG, "Sunny: Create public key file OK!");
+            resString = mCard.CreateFile(PRIVATE_KEY_FILE, (byte)0x03, 0x0, (byte)0x0, (byte)0x0, (byte)0x0);
+            if (resString == null || !resString.equals(Card.RES_OK)) {
+                disWaiting();
+                if (mCard!=null){
+                    mCard.CloseSEService();
+                }
+                utility.showMessage(myContext, getString(R.string.msgUnableToCreatePrivateKeyFile) + "error code=" + res[0]);
+                Log.e(TAG, "Sunny: Create public key file fail!");
+                return;
+            }
+            Log.i(TAG, "Sunny: Create private key file OK!");
+
             //產生 RSA key pair
-            String resString = mCard.GenRSAKeyPair(Card.RSA_1024_BITS, PUBLIC_KEY_FILE, PRIVATE_KEY_FILE);
+            resString = mCard.GenRSAKeyPair(Card.RSA_1024_BITS, PUBLIC_KEY_FILE, PRIVATE_KEY_FILE);
             if (resString != null && resString.equals(Card.RES_OK)) {
                 Log.d(TAG, "Sunny: Generate key pair OK!");
                 //重新讀出 PublicKey
                 res = mCard.ReadFile(PUBLIC_KEY_FILE, 0x0, 264);
                 if (res != null && res[0].equals(Card.RES_OK)) {
                     sPublicKey = res[1];
-                    Log.d(TAG, "public key=" + sPublicKey);
+                    Log.d(TAG, "Sunny, new generated public key=" + sPublicKey);
                 } else {
                     disWaiting();
                     if (mCard!=null){
                         mCard.CloseSEService();
                     }
                     utility.showMessage(myContext, getString(R.string.msgFailToReadPublicKey) + "error code=" + res[0]);
-                    Log.e(TAG, "no public key:" + res[0]);
+                    Log.e(TAG, "Sunny, unable to read new generated public key:" + res[0]);
                     return;
                 }
 
@@ -366,7 +391,7 @@ public class PaymentConfirmActivity extends AppCompatActivity {
                 if (mCard!=null){
                     mCard.CloseSEService();
                 }
-                Log.e(TAG, "Gen key pair Failed! error code=" + resString);
+                Log.e(TAG, "Sunny, Gen key pair Failed! error code=" + resString);
                 utility.showMessage(myContext, getString(R.string.msgUnableToGenerateRsaKeyPair) + ", error code=" + resString);
                 return;
             }
@@ -376,7 +401,7 @@ public class PaymentConfirmActivity extends AppCompatActivity {
                 mCard.CloseSEService();
             }
             utility.showMessage(myContext, getString(R.string.msgFailToReadPublicKey) + "error code=" + res[0]);
-            Log.e(TAG, "no public key:" + res[0]);
+            Log.e(TAG, "Sunny, failed to read public key:" + res[0]);
             return;
         }
 
@@ -417,7 +442,7 @@ public class PaymentConfirmActivity extends AppCompatActivity {
 
         //資料都有了，將資料送給 server
         //showWaiting(getString(R.string.pleaseWait), getString(R.string.msgSendRegistrationRequest));
-        Log.e(TAG, "Sunny: search goods");
+        Log.i(TAG, "Sunny: send signature to server");
         // making volley's json request
         JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.GET,
                 url, null,
@@ -426,7 +451,7 @@ public class PaymentConfirmActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(JSONObject response) {
                         disWaiting();
-                        Log.e(TAG, "Sunny: server response: " + response.toString());
+                        Log.i(TAG, "Sunny: server response: " + response.toString());
 
                         try{
                             String sResultCode = response.getString("resultCode");
