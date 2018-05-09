@@ -149,7 +149,7 @@ public class TransactionsActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(JSONObject response) {
                         disWaiting();
-                        Log.e(TAG, "Sunny: server response: " + response.toString());
+                        Log.d(TAG, "Sunny: server response: " + response.toString());
 
                         try{
                             String sResultCode = response.getString("resultCode");
