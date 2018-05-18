@@ -32,5 +32,4 @@
     <string name="titleMyCardBankName">銀行: myBANK</string>
     <string name="titleMyCardCardNumber">卡號: 9999 XXXX XXXX 9999</string>
     <string name="msgYouCanAddCardInCommercialRelease">增加卡片的功能將於正式版本中提供</string>
-
 </resources>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Mobile ID Pay</string>
+    <string name="title_home">二维码</string>
+    <string name="title_dashboard">我的卡片</string>
+    <string name="title_notifications">交易历史记录</string>
+    <string name="textScanQRCodeOnTheGoods">请扫描二维码后确认付款.</string>
+    <string name="textScanQRCode">扫描二维码</string>
+    <string name="msgBarcodeIsEmpty">空白二维码</string>
+    <string name="msgUnableToFindGoods">无法取得商品信息</string>
+    <string name="textConfirmPayment">确认付款</string>
+    <string name="txtGoodsName">商品名称:&#160;</string>
+    <string name="txtGoodsPrice">价格:&#160;</string>
+    <string name="txtGoodsDescription">商品描述:&#160;</string>
+    <string name="txtPleaseEnterPINCode">输入 PIN 码:&#160;</string>
+    <string name="pleaseWait">请稍后...</string>
+    <string name="msgCreatingSignature">产生签章中</string>
+    <string name="msgSystemInfo">系统通知</string>
+    <string name="msgDoesntSupportOti">无法连结SIM卡，请确认SIM卡有正确插入手机</string>
+    <string name="msgUnableToGetIccid">无法取得SIM卡信息，请注册您的凭证</string>
+    <string name="msgPleaseEnterPinCode">请输入 PIN 码</string>
+    <string name="msgPinCodeIsIncorrect">PIN 码输入错误，请输入正确的 PIN 码</string>
+    <string name="msgUnableToGetIdCardNumber">无法取得证号或电话号码，请注册您的凭证</string>
+    <string name="msgFailToReadPublicKey">无法取得您的公钥</string>
+    <string name="msgProcessFailed">作业执行失败</string>
+    <string name="msgProcessSucceeded">作业执行成功</string>
+    <string name="msgUnableToParseServerResponseData">无法解析服务器回传信息</string>
+    <string name="msgUnableToCreatePublicKeyFile">无法产生公钥档案空间</string>
+    <string name="msgUnableToCreatePrivateKeyFile">无法产生私钥档案空间</string>
+    <string name="msgUnableToGenerateRsaKeyPair">无法产生密钥对</string>
+    <string name="msgDataUpdateInProgress">数据更新中</string>
+    <string name="titleMyCardBankName">银行: myBANK</string>
+    <string name="titleMyCardCardNumber">卡号: 9999 XXXX XXXX 9999</string>
+    <string name="msgYouCanAddCardInCommercialRelease">增加卡片的功能将于正式版本中提供</string>
+</resources>
