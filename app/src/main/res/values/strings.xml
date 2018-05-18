@@ -31,4 +31,6 @@
     <string name="titleMyCardBankName">Bank: myBANK</string>
     <string name="titleMyCardCardNumber">Card No. 9999 XXXX XXXX 9999</string>
     <string name="msgYouCanAddCardInCommercialRelease">You can add your own card in the commercial release</string>
+    <string name="msgUnableToGetYourLocation">Unable to get your location information</string>
+    <string name="msgPleaseGrantLocationPermission">Please grant location service permission</string>
 </resources>

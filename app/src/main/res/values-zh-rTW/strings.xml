@@ -32,4 +32,6 @@
     <string name="titleMyCardBankName">銀行: myBANK</string>
     <string name="titleMyCardCardNumber">卡號: 9999 XXXX XXXX 9999</string>
     <string name="msgYouCanAddCardInCommercialRelease">增加卡片的功能將於正式版本中提供</string>
+    <string name="msgUnableToGetYourLocation">無法取得您的座標位置</string>
+    <string name="msgPleaseGrantLocationPermission">請允許座標服務的權限</string>
 </resources>

@@ -1,10 +1,17 @@
 package com.taisys.sc.mobileidpay;
 
+import android.Manifest;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
@@ -20,6 +27,9 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import com.squareup.picasso.Picasso;
@@ -31,6 +41,8 @@ public class PaymentConfirmActivity extends AppCompatActivity {
     private static final String TAG = PaymentConfirmActivity.class.getSimpleName();
     private static final int PUBLIC_KEY_FILE = 0x02A1;
     private static final int PRIVATE_KEY_FILE = 0x03A1;
+
+    private static final int REQUEST_CODE = 1000;
 
     private Card mCard = new Card();
     private ProgressDialog pg = null;
@@ -44,6 +56,30 @@ public class PaymentConfirmActivity extends AppCompatActivity {
     private String sTransactionID = "";
     private String sPublicKey = "";
     private String sRsaSignature = "";
+    private String sLocation = "";
+
+    private FusedLocationProviderClient mFusedLocationClient = null;
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        switch (requestCode) {
+            case REQUEST_CODE: {
+                if (grantResults.length > 0) {
+                    if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+                        getMyLocation();
+                    } else if (grantResults[0] == PackageManager.PERMISSION_DENIED) {
+
+                    }
+                }
+            }
+
+        }
+
+
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,7 +109,6 @@ public class PaymentConfirmActivity extends AppCompatActivity {
         setOnClickListener();
         // search the barcode
         searchBarcode(barcode);
-
     }
 
     @Override
@@ -133,20 +168,7 @@ public class PaymentConfirmActivity extends AppCompatActivity {
                 //顯示Progress對話視窗
                 // showWaiting(getString(R.string.pleaseWait), getString(R.string.msgCheckCardAvailability));
                 showWaiting(getString(R.string.pleaseWait), getString(R.string.msgCreatingSignature));
-                mCard.OpenSEService(myContext, "A000000018506373697A672D63617264",
-                        new Card.SCSupported() {
-
-                            @Override
-                            public void isSupported(boolean success) {
-                                if (success) {
-                                    //手機支援OTI
-                                    getCardInfo();
-                                } else {
-                                    disWaiting();
-                                    utility.showMessage(myContext, getString(R.string.msgDoesntSupportOti));
-                                }
-                            }
-                        });
+                getMyLocation();
             }
         });
 
@@ -215,7 +237,7 @@ public class PaymentConfirmActivity extends AppCompatActivity {
                 txtName.setText(goods.getName());
                 txtPrice.setText("$" + goods.getPrice());
                 txtDescription.setText(goods.getDescription());
-                Log.e(TAG, "image url: " + goods.getPicture());
+                Log.d(TAG, "image url: " + goods.getPicture());
                 Picasso.with(this).load(goods.getPicture()).placeholder(R.mipmap.ic_launcher).into(imgGoodsImage);
             } else {
                 // movie not found
@@ -261,6 +283,57 @@ public class PaymentConfirmActivity extends AppCompatActivity {
 
     }
 
+    private void getMyLocation(){
+        try{
+            if ( Build.VERSION.SDK_INT >= 23 &&
+                    ContextCompat.checkSelfPermission( myContext, android.Manifest.permission.ACCESS_FINE_LOCATION ) != PackageManager.PERMISSION_GRANTED &&
+                    ContextCompat.checkSelfPermission( myContext, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(PaymentConfirmActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_CODE);
+                utility.showMessage(myContext, getString(R.string.msgPleaseGrantLocationPermission));
+                return  ;
+            }else{
+                mFusedLocationClient = LocationServices.getFusedLocationProviderClient(myContext);
+            }
+            mFusedLocationClient.getLastLocation()
+                    .addOnSuccessListener(this, new OnSuccessListener<Location>() {
+                        @Override
+                        public void onSuccess(Location location) {
+                            // Got last known location. In some rare situations this can be null.
+                            if (location != null) {
+                                // Logic to handle location object
+                                String x = String.valueOf(location.getLongitude());
+                                String y = String.valueOf(location.getLatitude());
+                                Log.d(TAG, "Sunny: Latitude=" + y);
+                                Log.d(TAG, "Sunny: Longitude=" + x);
+                                x = utility.byte2Hex(x.getBytes());
+                                y = utility.byte2Hex(y.getBytes());
+                                sLocation = "ff" + y + "ff" + x;
+                                openSimCard();
+                            }
+                        }
+                    });
+        }catch (Exception e) {
+            Toast.makeText(getApplicationContext(), getString(R.string.msgUnableToGetYourLocation), Toast.LENGTH_SHORT).show();
+            openSimCard();
+        }
+    }
+
+    private void openSimCard(){
+        mCard.OpenSEService(myContext, "A000000018506373697A672D63617264",
+                new Card.SCSupported() {
+
+                    @Override
+                    public void isSupported(boolean success) {
+                        if (success) {
+                            //手機支援OTI
+                            getCardInfo();
+                        } else {
+                            disWaiting();
+                            utility.showMessage(myContext, getString(R.string.msgDoesntSupportOti));
+                        }
+                    }
+                });
+    }
 
     private void getCardInfo(){
         //顯示Progress對話視窗
@@ -277,11 +350,11 @@ public class PaymentConfirmActivity extends AppCompatActivity {
         if (res != null && res[0].equals(Card.RES_OK)) {
             /*
                             res[1] 的結構如下：
-                            假设拿到回复信息为：040001C3D908123456789012345601010412000100
-                            其中   040001C3D9           LV结构 04长度，0001C3D9文件系统剩余空间大小，0x0001C3D9 = 115673 byte；
-                            081234567890123456   LV结构 08长度，081234567890123456为卡号；
-                            0101                 LV结构 01长度，01卡片版本号；
-                            0412000100           LV结构 04长度，12000100 Cos版本号；
+                            假?拿到回复信息?：040001C3D908123456789012345601010412000100
+                            其中   040001C3D9           LV?构 04?度，0001C3D9文件系?剩余空?大小，0x0001C3D9 = 115673 byte；
+                            081234567890123456   LV?构 08?度，081234567890123456?卡?；
+                            0101                 LV?构 01?度，01卡片版本?；
+                            0412000100           LV?构 04?度，12000100 Cos版本?；
                          */
             s = res[1].substring(0, 2);
             i = Integer.parseInt(s);
@@ -405,7 +478,7 @@ public class PaymentConfirmActivity extends AppCompatActivity {
             return;
         }
 
-        res = mCard.RSAPriKeyCalc(sTransactionID, false, PRIVATE_KEY_FILE);
+        res = mCard.RSAPriKeyCalc(sTransactionID + sLocation, false, PRIVATE_KEY_FILE);
         if (mCard!=null){
             mCard.CloseSEService();
         }
@@ -435,7 +508,7 @@ public class PaymentConfirmActivity extends AppCompatActivity {
         String url = "http://cms.gslssd.com/MobileIdPayServer/ajaxAddNewTransaction.jsp?";
         url += "iccid=" + iccid;
         url += "&goodsId=" + goodsId;
-        url += "&transactionId=" + sTransactionID;
+        url += "&transactionId=" + sTransactionID + sLocation;
         url += "&publicKey=" + sPublicKey;
         url += "&signature=" + sRsaSignature;
 
