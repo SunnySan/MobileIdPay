@@ -1,5 +1,6 @@
 package com.taisys.sc.mobileidpay;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -17,6 +18,8 @@ import info.androidhive.barcode.BarcodeReader;
 public class ScanActivity extends AppCompatActivity implements BarcodeReader.BarcodeReaderListener {
 
     BarcodeReader barcodeReader;
+    private Context myContext = null;
+    private String sMessage = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +31,8 @@ public class ScanActivity extends AppCompatActivity implements BarcodeReader.Bar
         }catch (Exception e){
         }
 
+        myContext = this;
+
         // get the barcode reader instance
         barcodeReader = (BarcodeReader) getSupportFragmentManager().findFragmentById(R.id.barcode_scanner);
     }
@@ -35,6 +40,15 @@ public class ScanActivity extends AppCompatActivity implements BarcodeReader.Bar
     @Override
     public void onScanned(Barcode barcode) {
         String s = barcode.displayValue;
+
+        sMessage = s;
+        runOnUiThread(new Runnable() {
+            public void run() {
+                final Toast toast = Toast.makeText(myContext, "scanned value: " + sMessage, Toast.LENGTH_SHORT);
+                toast.show();
+            }
+        });
+
         if (s.indexOf("ajaxGetMyGoods")<1) return;
         barcodeReader.pauseScanning();
         // playing barcode reader beep sound
@@ -50,17 +64,35 @@ public class ScanActivity extends AppCompatActivity implements BarcodeReader.Bar
 
     @Override
     public void onScannedMultiple(List<Barcode> list) {
+        runOnUiThread(new Runnable() {
+            public void run() {
+                final Toast toast = Toast.makeText(myContext, "multiple list scanned", Toast.LENGTH_SHORT);
+                toast.show();
+            }
+        });
 
     }
 
     @Override
     public void onBitmapScanned(SparseArray<Barcode> sparseArray) {
+        runOnUiThread(new Runnable() {
+            public void run() {
+                final Toast toast = Toast.makeText(myContext, "bitmap scanned", Toast.LENGTH_SHORT);
+                toast.show();
+            }
+        });
 
     }
 
     @Override
     public void onScanError(String s) {
-        Toast.makeText(getApplicationContext(), "Error occurred while scanning " + s, Toast.LENGTH_SHORT).show();
+        sMessage = s;
+        runOnUiThread(new Runnable() {
+            public void run() {
+                final Toast toast = Toast.makeText(myContext, "Error occurred while scanning: " + sMessage, Toast.LENGTH_SHORT);
+                toast.show();
+            }
+        });
     }
 
     @Override
