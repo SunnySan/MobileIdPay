@@ -237,6 +237,7 @@ public class PaymentConfirmActivity extends AppCompatActivity {
                 txtName.setText(goods.getName());
                 txtPrice.setText("$" + goods.getPrice());
                 txtDescription.setText(goods.getDescription());
+                Log.d(TAG, "goodsId: " + goodsId);
                 Log.d(TAG, "image url: " + goods.getPicture());
                 Picasso.with(this).load(goods.getPicture()).placeholder(R.mipmap.ic_launcher).into(imgGoodsImage);
             } else {
@@ -388,6 +389,7 @@ public class PaymentConfirmActivity extends AppCompatActivity {
         int pinId = 0x1;
         pinCode = utility.byte2Hex(pinCode.getBytes());
         String res = mCard.VerifyPIN(pinId, pinCode);
+        //String  res = Card.RES_OK;
         /*
         if (mCard!=null){
             mCard.CloseSEService();

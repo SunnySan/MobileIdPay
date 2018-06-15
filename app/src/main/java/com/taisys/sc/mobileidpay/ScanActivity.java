@@ -42,12 +42,14 @@ public class ScanActivity extends AppCompatActivity implements BarcodeReader.Bar
         String s = barcode.displayValue;
 
         sMessage = s;
+        /*
         runOnUiThread(new Runnable() {
             public void run() {
                 final Toast toast = Toast.makeText(myContext, "scanned value: " + sMessage, Toast.LENGTH_SHORT);
                 toast.show();
             }
         });
+        */
 
         if (s.indexOf("ajaxGetMyGoods")<1) return;
         barcodeReader.pauseScanning();
